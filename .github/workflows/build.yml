@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   windows-build:
@@ -36,3 +36,23 @@ jobs:
         with:
           name: BlueBridge-win-x64
           path: artifacts/publish/
+
+      - name: Prepare release package
+        if: startsWith(github.event.head_commit.message, 'Release BlueBridge')
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path .\artifacts\package\App -Force | Out-Null
+          Copy-Item .\artifacts\publish\* .\artifacts\package\App -Recurse -Force
+          Copy-Item .\installer\Uninstall.ps1 .\artifacts\package\App\Uninstall.ps1 -Force
+          Copy-Item .\installer\INSTALL.cmd, .\installer\Install.ps1 .\artifacts\package -Force
+          Compress-Archive -Path .\artifacts\package\* -DestinationPath .\artifacts\BlueBridge-v1.3.0-win-x64.zip -CompressionLevel Optimal
+
+      - name: Publish v1.3.0 release
+        if: startsWith(github.event.head_commit.message, 'Release BlueBridge')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          gh release create v1.3.0 .\artifacts\BlueBridge-v1.3.0-win-x64.zip `
+            --title "BlueBridge 1.3.0" `
+            --notes "First public BlueBridge release. Route Bluetooth device audio to any Windows playback endpoint, repair a silent stream on demand, and keep the app quietly in the notification area."
