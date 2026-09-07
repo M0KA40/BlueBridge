@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a reproducible BlueBridge problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include clear reproduction steps and what you expected.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Phone and Bluetooth adapter
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Selected playback device
+  - type: textarea
+    attributes:
+      label: Relevant log output
+      description: Remove personal information before posting.
+      render: text

@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore .\src\BlueBridge.csproj -r win-x64
+
+      - name: Build
+        run: dotnet build .\src\BlueBridge.csproj -c Release --no-restore -warnaserror
+
+      - name: Publish
+        run: dotnet publish .\src\BlueBridge.csproj -c Release -r win-x64 --self-contained true --no-restore -o .\artifacts\publish
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlueBridge-win-x64
+          path: artifacts/publish/

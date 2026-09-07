@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>BlueBridge</AssemblyName>
+    <RootNamespace>BlueBridge</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\BlueBridge.ico</ApplicationIcon>
+    <Version>1.3.0</Version>
+    <Company>BlueBridge Contributors</Company>
+    <Product>BlueBridge</Product>
+    <Description>Lightweight Bluetooth audio receiver with precise output routing and on-demand stream repair.</Description>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishReadyToRun>false</PublishReadyToRun>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\BlueBridge.ico" />
+    <Content Include="vendor\svcl\svcl.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>tools\svcl.exe</TargetPath>
+    </Content>
+    <Content Include="vendor\svcl\svcl.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>tools\svcl.chm</TargetPath>
+    </Content>
+    <Content Include="vendor\svcl\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>tools\readme.txt</TargetPath>
+    </Content>
+  </ItemGroup>
+</Project>
